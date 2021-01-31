@@ -1,6 +1,7 @@
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import { authReducer } from '../reducers/authReducer';
+import { uiReducer } from '../reducers/uiReducers';
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
@@ -14,7 +15,8 @@ const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOO
 
 //el rpovider se importa de react-redux que tambien se instala con npm
 const reducers =combineReducers({
-    auth: authReducer
+    auth: authReducer,
+    ui: uiReducer
 })
 
 export const store = createStore(
