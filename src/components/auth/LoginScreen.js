@@ -9,6 +9,7 @@ import { useForm } from '../../hooks/useForm'
 export const LoginScreen = () => {
 
     const dispatch = useDispatch();
+    const {loading} = useSelector(state => state.ui)
     const {msgError} = useSelector(state => state.ui)
 
 
@@ -75,6 +76,7 @@ export const LoginScreen = () => {
                 <button 
                     className="btn btn-primary btn-block"
                     type="submit"
+                    disabled={ loading }
                 >
                     Login
                 </button>
