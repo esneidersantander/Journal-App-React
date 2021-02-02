@@ -10,6 +10,7 @@ export const RegisterScreen = () => {
 
     const dispatch = useDispatch();
 
+    const {loading} = useSelector(state => state.ui)
     const {msgError} = useSelector(state => state.ui)
 
 
@@ -98,6 +99,7 @@ export const RegisterScreen = () => {
                 <button 
                     className="btn btn-primary btn-block mb-5"
                     type="submit"
+                    disabled={ loading }
                 >
                     Register
                 </button>

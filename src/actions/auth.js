@@ -10,7 +10,6 @@ export const startLoginEmailPassword =(email, password)=>{
                 dispatch(login(user.uid, user.displayName))
                 dispatch(finishLoading())
             }).catch(e=>{
-                console.log(e);
                 dispatch(finishLoading())
             })
     }
@@ -22,9 +21,7 @@ export const startGoogleLogin=()=>{
         firebase.auth().signInWithPopup(googleAuthProvider)
             .then(({user})=>{
                 console.log(user);
-                dispatch (
-                    login (user.uid, user.displayName)
-                )
+                dispatch (login (user.uid, user.displayName))
             });
     }   
 }
@@ -32,15 +29,16 @@ export const startGoogleLogin=()=>{
 
 export const startRegisterWithEmailPasswordName =(email,password, name)=>{
     return (dispatch)=>{
+        dispatch (startLoading());
         firebase.auth().createUserWithEmailAndPassword(email,password)
             .then(async({user})=>{
                 await user.updateProfile({displayName:name});
                 console.log(user, );
-                dispatch (
-                    login (user.uid, user.displayName)
-                )
+                dispatch (login (user.uid, user.displayName))
+                dispatch(finishLoading())
             }).catch(e=>{
                 console.log(e);
+                dispatch(finishLoading())
             });
     }
 }
@@ -52,3 +50,17 @@ export const login=(uid, displayName)=>({
         displayName
     }
 });
+
+
+export const startLogout= ()=>{
+    return async (dispatch)=>{
+        await firebase.auth().signOut();
+
+        dispatch(logout())
+    }
+}
+
+
+export const logout =()=>({
+    type: types.logout
+})
