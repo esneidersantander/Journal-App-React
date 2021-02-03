@@ -17,6 +17,19 @@
 }
 
 
+.btn-danger{
+    background-color: rgb(255, 43, 43);
+    border-radius: 2px;
+
+    &:disabled{
+        background-color: lighten($color: $primary, $amount:15);
+    }
+
+    &:hover{
+        background-color: darken($color:rgb(255, 43, 43), $amount: 14);
+    }
+
+}
 .btn-primary{
     background-color: $primary;
     border-radius: 2px;
