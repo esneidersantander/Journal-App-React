@@ -6,14 +6,15 @@ import { types } from '../types/types';
 
 export const startNewNote=()=>{
     return async (dispatch, getState)=>{
-        const uid = getState().auth.uid;
+        const {uid} = getState().auth;
         const newNote ={
             title:'',
             body:'',
             date:new Date().getTime()
         }
         const doc = await db.collection(`${uid}/journal/notes`).add(newNote);
-        dispatch(activeNote(doc.uid, newNote))
+        dispatch(activeNote(doc.id, newNote))
+        dispatch(addNewNote(doc.id, newNote))
     }
 
 }
@@ -26,6 +27,13 @@ export const activeNote=(id, note)=>({
     }
 })
 
+
+export const addNewNote=(id, note)=>({
+    type:types.notesAddNew,
+    payload:{
+        id, ...note
+    }
+})
 
 export const startLoadingNotes=  (uid)=>{
     return async(dispatch)=>{
@@ -98,4 +106,9 @@ export const startDeleting = (id)=>{
 export const deleteNote=(id)=>({
     type:types.notesDelete,
     payload:id
+})
+
+
+export const noteLogout = ()=>({
+    type: types.notesLogoutCleaning
 })
