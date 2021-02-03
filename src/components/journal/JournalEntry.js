@@ -1,27 +1,45 @@
 import React from 'react'
-
-export const JournalEntry = () => {
+import moment from 'moment'
+import { activeNote } from '../../actions/notes';
+import { useDispatch } from 'react-redux';
+export const JournalEntry = ({id, date, title, body, url}) => {
+    const dispatch = useDispatch()
+    const noteDate = moment(date);
+    const handleEntryClick=()=>{
+        dispatch(activeNote(id, {
+            title: title,
+            body: body,
+            date: date,
+            url: url,
+        }))
+    }
     return (
-        <div className="journal__entry pointer"> 
-            <div 
-                className="journal__entry-picture"
-                style={{
-                    backgroundSize:'cover',
-                    backgroundImage:'url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi5kU9Isej4OXGm5XJG9mJeSR-SRsXlZ4eBw&usqp=CAU)'
-                }}
-            >
-            </div>
+        <div 
+            className="journal__entry pointer"
+            onClick={handleEntryClick}
+        > 
+            {
+                url&&
+                <div 
+                    className="journal__entry-picture"
+                    style={{
+                        backgroundSize:'cover',
+                        backgroundImage:`url(${url})`
+                    }}
+                >
+                </div>
+            }
             <div className="journal__entry-body">
                 <p className="journal__entry-title"> 
-                    Un nuevo dia
+                    {title}
                 </p>
                 <p className="journal__entry-content"> 
-                    Un nuevo diaadsasdas asdasdasd asdasdasd qweqwegdfgdf sdfsdgf
+                    {body}
                 </p>
             </div>
             <div className="journal__entry-date-box">
-                <span>Monday</span>
-                <h4>25</h4>
+                <span>{noteDate.format('dddd')}</span>
+                <h4>{noteDate.format('Do')}</h4>
             </div>
         </div>
     )
