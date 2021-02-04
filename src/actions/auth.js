@@ -35,7 +35,6 @@ export const startRegisterWithEmailPasswordName =(email,password, name)=>{
         firebase.auth().createUserWithEmailAndPassword(email,password)
             .then(async({user})=>{
                 await user.updateProfile({displayName:name});
-                console.log(user, );
                 dispatch (login (user.uid, user.displayName))
                 dispatch(finishLoading())
             }).catch(e=>{
